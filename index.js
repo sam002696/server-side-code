@@ -25,13 +25,24 @@ async function run() {
     try {
         await client.connect();
         const database = client.db("foodMaster");
+        // const serviceDatabase = client.db("serviceDatabase")
         const usersCollection = database.collection("users");
+        const serviceCollection = database.collection("allServices");
         //GET API 
         app.get('/users', async (req, res) => {
             const cursor = usersCollection.find({});
             const users = await cursor.toArray();
             res.send(users);
         })
+
+        //GET API for services
+
+        app.get('/allServices', async (req, res) => {
+            const serviceCursor = serviceCollection.find({});
+            const services = await serviceCursor.toArray();
+            res.send(services);
+        })
+
         //Single USer Update API
 
         app.get('/users/:id', async (req, res) => {
